@@ -658,7 +658,7 @@ components:
           type: string
     Cat:
       description: A representation of a cat
-      oneOf:
+      allOf:
         - $ref: '#/components/schemas/CatClueless'
         - $ref: '#/components/schemas/CatLazy'
       discriminator:
