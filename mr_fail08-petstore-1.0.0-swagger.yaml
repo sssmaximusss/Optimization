@@ -756,6 +756,12 @@ components:
           default: false
       xml:
         name: Order
+    PetTag:
+      description: Тип PetTag
+      type: string
+      enum:
+        - pet
+        - tag
     Pet:
       type: object
       required:
@@ -768,6 +774,8 @@ components:
           dog: '#/components/schemas/Dog'
           bee: '#/components/schemas/HoneyBee'
       properties:
+        type:
+          $ref: '#/components/schemas/PetTag'
         id:
           externalDocs:
             description: "Find more info here"
@@ -820,6 +828,8 @@ components:
     Tag:
       type: object
       properties:
+        type:
+          $ref: '#/components/schemas/PetTag'
         id:
           description: Tag ID
           allOf:
@@ -839,6 +849,11 @@ components:
           oneOf:
             - $ref: '#/components/schemas/Pet'
             - $ref: '#/components/schemas/Tag'
+          discriminator:
+            propertyName: petType
+            mapping:
+              pet: '#/components/schemas/Pet'
+              tag: '#/components/schemas/Tag'
         username:
           description: User supplied username
           type: string
@@ -926,3 +941,4 @@ components:
       type: apiKey
       name: api_key
       in: header
+      
