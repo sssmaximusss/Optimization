@@ -850,7 +850,7 @@ components:
             - $ref: '#/components/schemas/Pet'
             - $ref: '#/components/schemas/Tag'
           discriminator:
-            propertyName: petType
+            propertyName: type
             mapping:
               pet: '#/components/schemas/Pet'
               tag: '#/components/schemas/Tag'
@@ -941,4 +941,3 @@ components:
       type: apiKey
       name: api_key
       in: header
-      
