@@ -659,16 +659,6 @@ components:
     Cat:
       description: A representation of a cat
       allOf:
-        - $ref: '#/components/schemas/CatClueless'
-        - $ref: '#/components/schemas/CatLazy'
-      discriminator:
-        propertyName: huntingSkill
-        mapping:
-          clueless: '#/components/schemas/CatClueless'
-          lazy: '#/components/schemas/CatLazy'
-    CatLazy:
-      description: A representation of a cat lazy
-      allOf:
         - $ref: '#/components/schemas/Pet'
         - type: object
           properties:
@@ -678,23 +668,45 @@ components:
               default: lazy
               enum:
                 - lazy
+                - clueless
           required:
             - huntingSkill
+          discriminator:
+            propertyName: huntingSkill
+            mapping:
+              clueless: '#/components/schemas/CatClueless'
+              lazy: '#/components/schemas/CatLazy'
+    CatLazy:
+      description: A representation of a cat lazy
+      allOf:
+        - $ref: '#/components/schemas/Cat'
+        - type: object
+          properties:
+            lazySkill:
+              type: string
+              description: The measured skill for lazy
+              default: lazy1
+              enum:
+                - lazy1
+                - lazy2
+          required:
+            - lazySkill
       
     CatClueless:
       description: A representation of a cat clueless
       allOf:
-        - $ref: '#/components/schemas/Pet'
+        - $ref: '#/components/schemas/Cat'
         - type: object
           properties:
-            huntingSkill:
+            cluelessSkill:
               type: string
-              description: The measured skill for hunting
-              default: clueless
+              description: The measured skill for clueless
+              default: clueless1
               enum:
-                - clueless
+                - clueless1
+                - clueless2
           required:
-            - huntingSkill
+            - cluelessSkill
       
     Category:
       type: object
