@@ -658,6 +658,16 @@ components:
           type: string
     Cat:
       description: A representation of a cat
+      oneOf:
+        - $ref: '#/components/schemas/CatClueless'
+        - $ref: '#/components/schemas/CatLazy'
+      discriminator:
+        propertyName: huntingSkill
+        mapping:
+          clueless: '#/components/schemas/CatClueless'
+          lazy: '#/components/schemas/CatLazy'
+    CatLazy:
+      description: A representation of a cat lazy
       allOf:
         - $ref: '#/components/schemas/Pet'
         - type: object
@@ -667,25 +677,25 @@ components:
               description: The measured skill for hunting
               default: lazy
               enum:
-                - clueless
                 - lazy
           required:
             - huntingSkill
-          discriminator:
-            propertyName: huntingSkill
-            mapping:
-              clueless: '#/components/schemas/CatClueless'
-              lazy: '#/components/schemas/CatLazy'
-    CatLazy:
-      description: A representation of a cat lazy
-      allOf:
-        - $ref: '#/components/schemas/Cat'
-        - type: object
+      
     CatClueless:
-      description: A representation of a cat lazy
+      description: A representation of a cat clueless
       allOf:
-        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Pet'
         - type: object
+          properties:
+            huntingSkill:
+              type: string
+              description: The measured skill for hunting
+              default: clueless
+              enum:
+                - clueless
+          required:
+            - huntingSkill
+      
     Category:
       type: object
       properties:
